@@ -53,6 +53,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/chery.png
+    - assets/images/cherry.png
     - assets/images/lemon.png
     - assets/images/seven.png
