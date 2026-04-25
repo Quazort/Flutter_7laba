@@ -28,7 +28,6 @@ class _SlotMachineState
   var _message = '';
   var _isSpinning = false;
   var _isMuted = false;
-  var _backgroundStarted = false;
 
   @override
   void initState() {
@@ -73,15 +72,11 @@ class _SlotMachineState
 
   Future<void> _spin() async {
     if (_coins <= 0 || _isSpinning) return;
-    SoundService.playClick();
+    await SoundService.playClick();
     setState(() {
       _isSpinning = true;
       _message = '';
     });
-    if(!_backgroundStarted){
-      SoundService.playBackground();
-      _backgroundStarted = true;
-    }
     final result1 = await _spinReel(
       totalTicks: 10,
       onTick: (val) =>
@@ -101,25 +96,27 @@ class _SlotMachineState
     await Future.delayed(
       Duration(milliseconds: 300),
     );
+    String newMessage;
+    int coinsChange;
+    if(result1 == result2 && result2 == result3){
+      if (result1 == 'assets/images/seven.png'){
+        coinsChange = 10;
+        newMessage = "JACKPOT +10 coins";
+        await SoundService.playJackpot();
+      }else{
+        coinsChange = 3;
+        newMessage = "Win +3 coins";
+        await SoundService.playWin();
+      }
+    }else{
+      coinsChange = -1;
+      newMessage = "try again later -1 coin";
+      await SoundService.playLose();
+    }
     setState(() {
       _isSpinning = false;
-      if (result1 == result2 &&
-          result2 == result3) {
-        if (result1 ==
-            'assets/images/sevene.png') {
-          _coins += 10;
-          _message = "JACKPOT +10 coins";
-          SoundService.playJackpot();
-        } else {
-          _coins += 3;
-          _message = "win +3 coins!!!";
-          SoundService.playWin();
-        }
-      } else {
-        _coins -= 1;
-        _message = "try again -1 coin";
-        SoundService.playLose();
-      }
+      _coins += coinsChange;
+      _message = newMessage;
     });
   }
 
