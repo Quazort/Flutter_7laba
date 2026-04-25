@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:slot_machine/slot_row.dart';
+import 'sound_service.dart';
 
 class SlotMachine extends StatefulWidget {
   const SlotMachine({super.key});
@@ -26,6 +27,14 @@ class _SlotMachineState
   var _slot3 = 'assets/images/seven.png';
   var _message = '';
   var _isSpinning = false;
+  var _isMuted = false;
+  var _backgroundStarted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    SoundService.playBackground();
+  }
 
   void _reset() {
     setState(() {
@@ -64,10 +73,15 @@ class _SlotMachineState
 
   Future<void> _spin() async {
     if (_coins <= 0 || _isSpinning) return;
+    SoundService.playClick();
     setState(() {
       _isSpinning = true;
       _message = '';
     });
+    if(!_backgroundStarted){
+      SoundService.playBackground();
+      _backgroundStarted = true;
+    }
     final result1 = await _spinReel(
       totalTicks: 10,
       onTick: (val) =>
@@ -95,14 +109,24 @@ class _SlotMachineState
             'assets/images/sevene.png') {
           _coins += 10;
           _message = "JACKPOT +10 coins";
+          SoundService.playJackpot();
         } else {
           _coins += 3;
           _message = "win +3 coins!!!";
+          SoundService.playWin();
         }
       } else {
         _coins -= 1;
         _message = "try again -1 coin";
+        SoundService.playLose();
       }
+    });
+  }
+
+  void _toggleMute() {
+    SoundService.toggleMute();
+    setState(() {
+      _isMuted = SoundService.isMuted;
     });
   }
 
@@ -111,6 +135,25 @@ class _SlotMachineState
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: EdgeInsets.only(
+              right: 16,
+              top: 8,
+            ),
+            child: IconButton(
+              onPressed: _toggleMute,
+              icon: Icon(
+                _isMuted
+                    ? Icons.volume_off
+                    : Icons.volume_up,
+                color: Colors.white,
+                size: 28,
+              ),
+            ),
+          ),
+        ),
         Text(
           "money:  $_coins",
           style: TextStyle(
