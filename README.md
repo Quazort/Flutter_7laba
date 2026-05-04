@@ -34,6 +34,11 @@ flutter pub get
 flutter run -d chrome
 ```
 
+
+## Установка на андроид 
+
+[apk](build\app\outputs\flutter-apk\app-release.apk)
+
 📚## Тенологии 
 
 - Flutter 3.41.2
