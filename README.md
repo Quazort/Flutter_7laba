@@ -1,17 +1,51 @@
-# slot_machine
+# Учебное приложение. 🎰Слот-машина
 
-A new Flutter project.
+Простое Flutter-приложени - симулятор казино. Крути барабаны, собирай одинаковые символы и выигрывай монеты
 
-## Getting Started
+📱## Скриншиты
 
-This project is a starting point for a Flutter application.
+![пример 1](steps/general.png)
+![пример 2](steps/jackpot.png)
+![пример 3](steps/lose.png)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+🕹## Как играть
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Нажми КРУТИТЬ чтобы запустить барабан
+- Три одинаковых сивола - победа (3 монеты)
+- три 7 - джекпот(+10 монет)
+- разные символы - проигрышь
+- Начините заново кнопкой Начать заново
+
+🚀## Запуск проекта
+
+```
+git clone https://github.com/Quazort/Flutter_7laba.git
+```
+
+установить зависимости
+```
+flutter pub get
+```
+
+
+запустить приложение
+```
+flutter run -d chrome
+```
+
+📚## Тенологии 
+
+- Flutter 3.41.2
+- Dart 3.11.0
+- Платформы Web, Android
+
+## Что изучено
+
+- Работа с изображениями Image.asset()
+- генерация случайных чисел через dart:math
+- Сборка под Web и Android
+
+
+## Авторы
+Кузнецов А Вахрушева А ИСП-233
