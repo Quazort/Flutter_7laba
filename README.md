@@ -37,7 +37,7 @@ flutter run -d chrome
 
 ## Установка на андроид 
 
-[apk](build\app\outputs\flutter-apk\app-release.apk)
+[apk](https://github.com/Quazort/Flutter_7laba/releases/tag/Slot-machine)
 
 📚## Тенологии 
 
